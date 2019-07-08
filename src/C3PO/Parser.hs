@@ -19,15 +19,17 @@ parseLocales =
   in handle . runParser localesDefinitionsParser () "code"
 
 localesDefinitionsParser :: Parser LocalesDefinitions
-localesDefinitionsParser = LocalesDefinitions <$> sepEndBy1 localeDefinitionParser endOfLine <* spaces <* eof
+localesDefinitionsParser = LocalesDefinitions <$> (spaces *> sepEndBy1 localeDefinitionParser endOfLine <* spaces <* eof)
 
 localeDefinitionParser :: Parser MessageDefinition
-localeDefinitionParser =
-  MessageDefinition <$> messageIdParser
-                    <*  spaces
-                    <*> localeParser
-                    <*  spaces
-                    <*> messageRepresentationParser
+localeDefinitionParser = spaces *>
+  (
+    MessageDefinition <$> messageIdParser
+                      <*  spaces
+                      <*> between quote quote localeParser
+                      <*  spaces
+                      <*> messageRepresentationParser
+  )
 
 messageIdParser :: Parser MessageId
 messageIdParser = identifierParser

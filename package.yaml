@@ -35,6 +35,7 @@ library:
   - parsec
   - template-haskell
   - text
+  - th-lift
   - transformers
 
 executables:

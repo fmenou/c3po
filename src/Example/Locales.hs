@@ -1,16 +1,20 @@
-{-# LANGUAGE OverloadedLists   #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE TemplateHaskell   #-}
+{-# LANGUAGE OverloadedStrings  #-}
+{-# LANGUAGE StandaloneDeriving #-}
+{-# LANGUAGE TemplateHaskell    #-}
 
-module Example.Locales where
+module Example.Locales
+  ( MyLocale(..)
+  , locales
+  , localesFromFile
+  ) where
 
-import           Data.Map            (Map)
-import           Data.String         (IsString)
-import           Language.Haskell.TH (Name)
+import           C3PO (ToLocaleCode (..), deriveLocales)
 
-data MyLocale = FrenchFrance | EnglishUK
+data MyLocale = EnglishUK
+              | FrenchFrance
 
-allLocales :: (IsString str, Ord str) => Map str Name
-allLocales = [ ("fr_FR" , 'FrenchFrance)
-             , ("en_UK" , 'EnglishUK   )
-             ]
+instance ToLocaleCode MyLocale where
+  localeCode EnglishUK    = "en_UK"
+  localeCode FrenchFrance = "fr_FR"
+
+deriveLocales ''MyLocale

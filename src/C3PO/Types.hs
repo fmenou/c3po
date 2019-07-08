@@ -6,14 +6,17 @@ module C3PO.Types
   , MessageDefinition(..)
   , MessageId(..)
   , LocaleCode(..)
+  , ToLocaleCode(..)
+  , Locales(..)
   , PlaceHolder(..)
   , MessageRepresentation(..)
   , Messages(..)
   , Message(..)
   ) where
 
-import           Data.Map    (Map)
-import           Data.String (IsString)
+import           Data.Map            (Map)
+import           Data.String         (IsString)
+import           Language.Haskell.TH (Name)
 
 newtype LocalesDefinitions = LocalesDefinitions [MessageDefinition] deriving stock (Show)
 
@@ -47,3 +50,8 @@ instance Semigroup Message where
 
 instance Monoid Message where
   mempty = Message mempty mempty
+
+class ToLocaleCode l where
+  localeCode :: l -> LocaleCode
+
+newtype Locales = Locales (Name, Map LocaleCode Name)
