@@ -1,0 +1,61 @@
+name:                c3po
+version:             0.1.0.0
+github:              "fmenou/c3po"
+license:             MIT
+author:              "Frédéric Menou"
+maintainer:          "frederic.menou@fretlink.com"
+copyright:           "2019 Frédéric Menou"
+
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+# Metadata used when publishing your package
+synopsis:            Experiments about type safe i18n
+# category:            Web
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Please see the README on Github at <https://github.com/fmenou/c3po#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+
+library:
+  source-dirs: src
+  ghc-options:
+  - -Wall
+  - -Werror
+  dependencies:
+  - containers
+  - formatting
+  - mtl
+  - named
+  - parsec
+  - template-haskell
+  - text
+  - th-lift
+  - transformers
+
+executables:
+  c3po-exe:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - c3po
+
+tests:
+  c3po-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - c3po
